@@ -1,0 +1,32 @@
+.card {
+  background: white;
+  border-radius: 8px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+h2 {
+  margin-top: 0;
+  color: #2c3e50;
+}
+.project-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+}
+.project-table th, .project-table td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #eee;
+}
+.project-table th {
+  background-color: #f8f9fa;
+  font-weight: 500;
+  color: #666;
+}
+.badge {
+  padding: 4px 8px;
+  border-radius: 12px;
+  color: white;
+  font-size: 0.85rem;
+  font-weight: 500;
+}

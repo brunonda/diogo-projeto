@@ -1,0 +1,25 @@
+<div class="card">
+  <h2>Meus Projetos</h2>
+  <table class="project-table">
+    <thead>
+      <tr>
+        <th>Cliente</th>
+        <th>Ambiente</th>
+        <th>Orçamento</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let project of projects">
+        <td>{{ project.clientName }}</td>
+        <td>{{ project.roomType }}</td>
+        <td>{{ project.budget | currency:'BRL' }}</td>
+        <td>
+          <span class="badge" [style.backgroundColor]="project.status | statusColor">
+            {{ project.status }}
+          </span>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

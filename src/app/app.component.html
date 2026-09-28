@@ -1,0 +1,20 @@
+<div class="app-container h-screen overflow-y-auto scroll-smooth bg-[#f7f7f8] text-[#111113] antialiased">
+  <app-navbar></app-navbar>
+  
+  <main>
+    <app-hero></app-hero>
+    <app-services></app-services>
+    <app-portfolio></app-portfolio>
+    <app-briefing (showModalEvent)="handleModal($event)"></app-briefing>
+  </main>
+  
+  <app-footer></app-footer>
+  
+  <app-modal
+    [isOpen]="modalState().isOpen"
+    [title]="modalState().title"
+    [message]="modalState().message"
+    [type]="modalState().type"
+    (closeModal)="closeModal()"
+  ></app-modal>
+</div>

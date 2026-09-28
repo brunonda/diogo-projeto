@@ -1,0 +1,32 @@
+<nav class="fixed w-full z-50 bg-white/80 backdrop-blur-md border-b border-[#e8e8ea]">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex justify-between items-center h-20">
+      <div class="flex-shrink-0 flex items-center">
+        <span class="font-serif text-2xl font-semibold tracking-tighter text-[#111113]">Estúdio<span class="text-stone-400">.</span></span>
+      </div>
+      <div class="hidden md:flex space-x-8 items-center">
+        <a href="#sobre" class="text-sm font-medium text-stone-500 hover:text-[#111113] transition-colors">Abordagem</a>
+        <a href="#servicos" class="text-sm font-medium text-stone-500 hover:text-[#111113] transition-colors">Serviços</a>
+        <a href="#portfolio" class="text-sm font-medium text-stone-500 hover:text-[#111113] transition-colors">Projetos</a>
+        <a href="#briefing" class="text-sm font-medium bg-[#111113] text-white px-5 py-2 rounded-full hover:bg-stone-800 transition-colors">Iniciar Projeto</a>
+      </div>
+      <div class="md:hidden flex items-center">
+        <button (click)="toggleMenu()" class="text-[#111113] hover:text-stone-600 focus:outline-none" aria-label="Menu principal">
+          <i class="ph ph-list text-3xl"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+  <div 
+    class="md:hidden bg-white border-b border-[#e8e8ea] absolute w-full overflow-hidden transition-all duration-300" 
+    [class.max-h-0]="!isMenuOpen()" 
+    [class.max-h-64]="isMenuOpen()"
+  >
+    <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 flex flex-col">
+      <a href="#sobre" (click)="closeMenu()" class="block px-3 py-2 text-base font-medium text-stone-600 hover:bg-[#f7f7f8]">Abordagem</a>
+      <a href="#servicos" (click)="closeMenu()" class="block px-3 py-2 text-base font-medium text-stone-600 hover:bg-[#f7f7f8]">Serviços</a>
+      <a href="#portfolio" (click)="closeMenu()" class="block px-3 py-2 text-base font-medium text-stone-600 hover:bg-[#f7f7f8]">Projetos</a>
+      <a href="#briefing" (click)="closeMenu()" class="block px-3 py-2 text-base font-medium text-[#111113] hover:bg-[#f7f7f8]">Iniciar Projeto</a>
+    </div>
+  </div>
+</nav>

@@ -29,7 +29,7 @@ import {
   querystring,
   querystringDecode,
   registerVersion
-} from "./chunk-GUOKCNWM.js";
+} from "./chunk-XMSLEJS5.js";
 import {
   __async,
   __objRest,

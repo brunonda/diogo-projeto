@@ -1,55 +1,55 @@
 {
-  "hash": "99240498",
-  "configHash": "1bfdc53e",
-  "lockfileHash": "56ba8bd8",
-  "browserHash": "80bfdb2c",
+  "hash": "dd860e20",
+  "configHash": "abd281e5",
+  "lockfileHash": "085dca4b",
+  "browserHash": "02003fe2",
   "optimized": {
     "@angular/core": {
       "src": "../../../../../node_modules/@angular/core/fesm2022/core.mjs",
       "file": "@angular_core.js",
-      "fileHash": "28ca6905",
+      "fileHash": "0c5ce780",
       "needsInterop": false
     },
     "@angular/forms": {
       "src": "../../../../../node_modules/@angular/forms/fesm2022/forms.mjs",
       "file": "@angular_forms.js",
-      "fileHash": "607d1007",
+      "fileHash": "4dde8c4a",
       "needsInterop": false
     },
     "@angular/platform-browser": {
       "src": "../../../../../node_modules/@angular/platform-browser/fesm2022/platform-browser.mjs",
       "file": "@angular_platform-browser.js",
-      "fileHash": "d596b180",
+      "fileHash": "f6e93acf",
       "needsInterop": false
     },
     "firebase/app": {
       "src": "../../../../../node_modules/firebase/app/dist/esm/index.esm.js",
       "file": "firebase_app.js",
-      "fileHash": "4871e331",
+      "fileHash": "ae238150",
       "needsInterop": false
     },
     "firebase/auth": {
       "src": "../../../../../node_modules/firebase/auth/dist/esm/index.esm.js",
       "file": "firebase_auth.js",
-      "fileHash": "772ea2d1",
+      "fileHash": "e4953a40",
       "needsInterop": false
     },
     "firebase/firestore": {
       "src": "../../../../../node_modules/firebase/firestore/dist/esm/index.esm.js",
       "file": "firebase_firestore.js",
-      "fileHash": "1d5d3f45",
+      "fileHash": "d002c0ed",
       "needsInterop": false
     }
   },
   "chunks": {
-    "chunk-XKCMND7Y": {
-      "file": "chunk-XKCMND7Y.js"
+    "chunk-KN3TPVQL": {
+      "file": "chunk-KN3TPVQL.js"
     },
-    "chunk-GUOKCNWM": {
-      "file": "chunk-GUOKCNWM.js"
+    "chunk-J3QDHV2M": {
+      "file": "chunk-J3QDHV2M.js"
     },
-    "chunk-S6QNPV7A": {
-      "file": "chunk-S6QNPV7A.js"
+    "chunk-XMSLEJS5": {
+      "file": "chunk-XMSLEJS5.js"
     },
     "chunk-5K356HEJ": {
       "file": "chunk-5K356HEJ.js"

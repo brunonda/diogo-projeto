@@ -1,9 +1,6 @@
 import { Component, signal } from '@angular/core';
+import { RouterOutlet } from '@angular/router';
 import { NavbarComponent } from './components/navbar/navbar.component';
-import { HeroComponent } from './components/hero/hero.component';
-import { ServicesComponent } from './components/services/services.component';
-import { PortfolioComponent } from './components/portfolio/portfolio.component';
-import { BriefingComponent } from './components/briefing/briefing.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { ModalComponent } from './components/modal/modal.component';
 import { ModalEvent, ModalState } from './core/models/modal.model';
@@ -12,11 +9,8 @@ import { ModalEvent, ModalState } from './core/models/modal.model';
   selector: 'app-root',
   standalone: true,
   imports: [
+    RouterOutlet,
     NavbarComponent,
-    HeroComponent,
-    ServicesComponent,
-    PortfolioComponent,
-    BriefingComponent,
     FooterComponent,
     ModalComponent
   ],

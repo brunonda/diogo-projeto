@@ -1,32 +1,95 @@
-<nav class="fixed w-full z-50 bg-white/80 backdrop-blur-md border-b border-[#e8e8ea]">
+<nav class="fixed w-full z-50 bg-white/90 backdrop-blur-md border-b border-[#e8e8ea]">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="flex justify-between items-center h-20">
-      <div class="flex-shrink-0 flex items-center">
-        <span class="font-serif text-2xl font-semibold tracking-tighter text-[#111113]">Estúdio<span class="text-stone-400">.</span></span>
+      <div class="flex-shrink-0 flex items-center gap-3">
+        <a routerLink="/" class="font-serif text-2xl font-semibold tracking-tighter text-[#111113]">
+          Estúdio<span class="text-stone-400">.</span>
+        </a>
+        @if (authService.isDesigner()) {
+          <span class="text-xs bg-stone-900 text-white px-2.5 py-0.5 rounded-full font-medium">Designer</span>
+        }
       </div>
-      <div class="hidden md:flex space-x-8 items-center">
-        <a href="#sobre" class="text-sm font-medium text-stone-500 hover:text-[#111113] transition-colors">Abordagem</a>
-        <a href="#servicos" class="text-sm font-medium text-stone-500 hover:text-[#111113] transition-colors">Serviços</a>
-        <a href="#portfolio" class="text-sm font-medium text-stone-500 hover:text-[#111113] transition-colors">Projetos</a>
-        <a href="#briefing" class="text-sm font-medium bg-[#111113] text-white px-5 py-2 rounded-full hover:bg-stone-800 transition-colors">Iniciar Projeto</a>
+
+      <!-- Links Desktop -->
+      <div class="hidden md:flex space-x-6 items-center">
+        @if (!authService.isAuthenticated()) {
+          <a href="/#sobre" class="text-sm font-medium text-stone-500 hover:text-[#111113] transition-colors">Abordagem</a>
+          <a href="/#servicos" class="text-sm font-medium text-stone-500 hover:text-[#111113] transition-colors">Serviços</a>
+          <a href="/#portfolio" class="text-sm font-medium text-stone-500 hover:text-[#111113] transition-colors">Projetos</a>
+          <a href="/#briefing" class="text-sm font-medium bg-[#111113] text-white px-5 py-2 rounded-full hover:bg-stone-800 transition-colors">
+            Iniciar Projeto
+          </a>
+          <a routerLink="/login" class="text-sm font-medium text-stone-700 hover:text-black border border-stone-200 px-4 py-2 rounded-full hover:bg-stone-50 transition-colors flex items-center gap-1.5">
+            <i class="ph ph-camera text-base"></i>
+            <span>Área do Designer</span>
+          </a>
+        } @else {
+          <a routerLink="/" class="text-sm font-medium text-stone-500 hover:text-[#111113] transition-colors">Ver Site</a>
+          <a href="/#portfolio" class="text-sm font-medium text-stone-500 hover:text-[#111113] transition-colors">Portfólio</a>
+
+          <a routerLink="/designer" class="text-sm font-medium bg-stone-900 text-white px-4 py-2 rounded-full hover:bg-stone-800 transition-colors flex items-center gap-1.5">
+            <i class="ph ph-images-square text-base"></i>
+            <span>Gerenciar Fotos & Projetos</span>
+          </a>
+
+          <div class="flex items-center gap-3 pl-2 border-l border-stone-200">
+            <div class="text-right">
+              <div class="text-xs font-semibold text-stone-800 truncate max-w-[140px]">{{ authService.currentUser()?.displayName }}</div>
+              <div class="text-[10px] text-stone-400 truncate max-w-[140px]">{{ authService.currentUser()?.email }}</div>
+            </div>
+            <button
+              (click)="logout()"
+              class="text-xs text-stone-500 hover:text-red-600 p-2 rounded-full hover:bg-red-50 transition-colors"
+              title="Sair da conta"
+            >
+              <i class="ph ph-sign-out text-lg"></i>
+            </button>
+          </div>
+        }
       </div>
-      <div class="md:hidden flex items-center">
-        <button (click)="toggleMenu()" class="text-[#111113] hover:text-stone-600 focus:outline-none" aria-label="Menu principal">
+
+      <!-- Menu Mobile Button -->
+      <div class="md:hidden flex items-center gap-2">
+        @if (authService.isAuthenticated()) {
+          <button (click)="logout()" class="text-xs text-stone-600 border border-stone-200 px-2.5 py-1.5 rounded-lg flex items-center gap-1">
+            <i class="ph ph-sign-out"></i> Sair
+          </button>
+        }
+        <button (click)="toggleMenu()" class="text-[#111113] hover:text-stone-600 focus:outline-none p-1" aria-label="Menu principal">
           <i class="ph ph-list text-3xl"></i>
         </button>
       </div>
     </div>
   </div>
+
+  <!-- Menu Mobile Dropdown -->
   <div 
     class="md:hidden bg-white border-b border-[#e8e8ea] absolute w-full overflow-hidden transition-all duration-300" 
     [class.max-h-0]="!isMenuOpen()" 
-    [class.max-h-64]="isMenuOpen()"
+    [class.max-h-96]="isMenuOpen()"
   >
-    <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 flex flex-col">
-      <a href="#sobre" (click)="closeMenu()" class="block px-3 py-2 text-base font-medium text-stone-600 hover:bg-[#f7f7f8]">Abordagem</a>
-      <a href="#servicos" (click)="closeMenu()" class="block px-3 py-2 text-base font-medium text-stone-600 hover:bg-[#f7f7f8]">Serviços</a>
-      <a href="#portfolio" (click)="closeMenu()" class="block px-3 py-2 text-base font-medium text-stone-600 hover:bg-[#f7f7f8]">Projetos</a>
-      <a href="#briefing" (click)="closeMenu()" class="block px-3 py-2 text-base font-medium text-[#111113] hover:bg-[#f7f7f8]">Iniciar Projeto</a>
+    <div class="px-4 pt-3 pb-4 space-y-2 flex flex-col text-sm">
+      @if (!authService.isAuthenticated()) {
+        <a href="/#sobre" (click)="closeMenu()" class="block py-2 text-stone-600 hover:text-[#111113]">Abordagem</a>
+        <a href="/#servicos" (click)="closeMenu()" class="block py-2 text-stone-600 hover:text-[#111113]">Serviços</a>
+        <a href="/#portfolio" (click)="closeMenu()" class="block py-2 text-stone-600 hover:text-[#111113]">Projetos</a>
+        <a href="/#briefing" (click)="closeMenu()" class="block py-2 font-medium text-[#111113]">Iniciar Projeto</a>
+        <a routerLink="/login" (click)="closeMenu()" class="block py-2 font-medium text-stone-900 border-t border-stone-100 pt-3 flex items-center gap-2">
+          <i class="ph ph-camera"></i> Área do Designer
+        </a>
+      } @else {
+        <div class="py-2 border-b border-stone-100">
+          <div class="text-xs font-semibold text-stone-800">{{ authService.currentUser()?.displayName }}</div>
+          <div class="text-[11px] text-stone-400">{{ authService.currentUser()?.email }}</div>
+        </div>
+        <a routerLink="/" (click)="closeMenu()" class="block py-2 text-stone-600">Ver Site</a>
+        <a routerLink="/designer" (click)="closeMenu()" class="block py-2 font-semibold text-[#111113] flex items-center gap-1.5">
+          <i class="ph ph-images-square"></i> Gerenciar Fotos & Projetos
+        </a>
+        <button (click)="logout()" class="block w-full text-left py-2 text-red-600 font-medium border-t border-stone-100 pt-2">
+          Sair
+        </button>
+      }
     </div>
   </div>
 </nav>

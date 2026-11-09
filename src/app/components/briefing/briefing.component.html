@@ -3,66 +3,161 @@
     <div class="bg-white rounded-3xl shadow-xl overflow-hidden border border-[#e8e8ea]">
       <div class="p-8 md:p-12">
         <div class="text-center mb-10">
+          <span class="inline-block px-3 py-1 bg-stone-100 text-stone-700 text-xs font-semibold rounded-full uppercase tracking-wider mb-3">Orçamento Online</span>
           <h2 class="text-3xl font-serif mb-4 text-[#111113]">Inicie seu Projeto</h2>
           <p class="text-stone-500 text-sm max-w-lg mx-auto">
-            Preencha o formulário abaixo para analisarmos seu escopo e avaliarmos como nosso estúdio pode atender ao seu objetivo.
+            Preencha o formulário abaixo para analisarmos seu escopo e apresentarmos uma proposta personalizada para a sua obra.
           </p>
         </div>
 
-        <form [formGroup]="briefingForm" (ngSubmit)="onSubmit()" class="space-y-6">
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <form [formGroup]="briefingForm" (ngSubmit)="onSubmit()" class="space-y-6" novalidate>
+          <!-- Campo Honeypot Oculto para Combate a Bots / Spam -->
+          <div class="hidden" aria-hidden="true">
+            <label for="website_hp">Não preencha este campo:</label>
+            <input type="text" id="website_hp" formControlName="websiteHoneypot" tabindex="-1" autocomplete="off" />
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div>
-              <label class="block text-sm font-medium text-stone-700 mb-1">Nome Completo</label>
-              <input type="text" formControlName="name" class="w-full px-4 py-3 rounded-lg border border-stone-200 bg-stone-50 focus:bg-white focus:ring-2 focus:ring-[#111113] focus:border-transparent outline-none transition-all">
+              <label for="client_name" class="block text-sm font-medium text-stone-700 mb-1">Nome Completo *</label>
+              <input
+                id="client_name"
+                type="text"
+                formControlName="name"
+                placeholder="Ex: Carlos Silva"
+                class="w-full px-4 py-3 rounded-lg border border-stone-200 bg-stone-50 focus:bg-white focus:ring-2 focus:ring-[#111113] focus:border-transparent outline-none transition-all text-sm"
+                [class.border-red-400]="briefingForm.get('name')?.invalid && briefingForm.get('name')?.touched"
+              >
+              @if (briefingForm.get('name')?.invalid && briefingForm.get('name')?.touched) {
+                <span class="text-xs text-red-500 mt-1 block">Por favor, informe seu nome.</span>
+              }
             </div>
+
             <div>
-              <label class="block text-sm font-medium text-stone-700 mb-1">E-mail</label>
-              <input type="email" formControlName="email" class="w-full px-4 py-3 rounded-lg border border-stone-200 bg-stone-50 focus:bg-white focus:ring-2 focus:ring-[#111113] focus:border-transparent outline-none transition-all">
+              <label for="client_email" class="block text-sm font-medium text-stone-700 mb-1">E-mail *</label>
+              <input
+                id="client_email"
+                type="email"
+                formControlName="email"
+                placeholder="seu.email@exemplo.com"
+                class="w-full px-4 py-3 rounded-lg border border-stone-200 bg-stone-50 focus:bg-white focus:ring-2 focus:ring-[#111113] focus:border-transparent outline-none transition-all text-sm"
+                [class.border-red-400]="briefingForm.get('email')?.invalid && briefingForm.get('email')?.touched"
+              >
+              @if (briefingForm.get('email')?.invalid && briefingForm.get('email')?.touched) {
+                <span class="text-xs text-red-500 mt-1 block">Informe um e-mail válido.</span>
+              }
+            </div>
+
+            <div>
+              <label for="client_phone" class="block text-sm font-medium text-stone-700 mb-1">Telefone / WhatsApp *</label>
+              <input
+                id="client_phone"
+                type="tel"
+                formControlName="phone"
+                placeholder="(11) 98765-4321"
+                class="w-full px-4 py-3 rounded-lg border border-stone-200 bg-stone-50 focus:bg-white focus:ring-2 focus:ring-[#111113] focus:border-transparent outline-none transition-all text-sm"
+                [class.border-red-400]="briefingForm.get('phone')?.invalid && briefingForm.get('phone')?.touched"
+              >
+              @if (briefingForm.get('phone')?.invalid && briefingForm.get('phone')?.touched) {
+                <span class="text-xs text-red-500 mt-1 block">Telefone é obrigatório.</span>
+              }
             </div>
           </div>
 
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
-              <label class="block text-sm font-medium text-stone-700 mb-1">Tipo de Imóvel</label>
-              <select formControlName="projectType" class="w-full px-4 py-3 rounded-lg border border-stone-200 bg-stone-50 focus:bg-white focus:ring-2 focus:ring-[#111113] focus:border-transparent outline-none transition-all text-stone-700">
-                <option value="" disabled>Selecione...</option>
+              <label for="project_type" class="block text-sm font-medium text-stone-700 mb-1">Tipo de Imóvel / Serviço *</label>
+              <select
+                id="project_type"
+                formControlName="projectType"
+                class="w-full px-4 py-3 rounded-lg border border-stone-200 bg-stone-50 focus:bg-white focus:ring-2 focus:ring-[#111113] focus:border-transparent outline-none transition-all text-sm text-stone-700"
+                [class.border-red-400]="briefingForm.get('projectType')?.invalid && briefingForm.get('projectType')?.touched"
+              >
+                <option value="" disabled>Selecione o tipo...</option>
                 <option value="Residencial (Apartamento)">Residencial (Apartamento)</option>
                 <option value="Residencial (Casa)">Residencial (Casa)</option>
-                <option value="Comercial">Comercial</option>
+                <option value="Comercial / Consultório">Comercial / Consultório</option>
+                <option value="Consultoria Pontual de Decoração">Consultoria Pontual de Decoração</option>
               </select>
+              @if (briefingForm.get('projectType')?.invalid && briefingForm.get('projectType')?.touched) {
+                <span class="text-xs text-red-500 mt-1 block">Selecione o tipo de serviço.</span>
+              }
             </div>
+
             <div>
-              <label class="block text-sm font-medium text-stone-700 mb-1">Orçamento Estimado</label>
-              <select formControlName="budget" class="w-full px-4 py-3 rounded-lg border border-stone-200 bg-stone-50 focus:bg-white focus:ring-2 focus:ring-[#111113] focus:border-transparent outline-none transition-all text-stone-700">
-                <option value="" disabled>Selecione uma faixa...</option>
-                <option value="Até R$ 20.000">Até R$ 20.000</option>
-                <option value="R$ 20.000 a R$ 50.000">R$ 20.000 a R$ 50.000</option>
+              <label for="budget_range" class="block text-sm font-medium text-stone-700 mb-1">Faixa de Orçamento Estimada *</label>
+              <select
+                id="budget_range"
+                formControlName="budget"
+                class="w-full px-4 py-3 rounded-lg border border-stone-200 bg-stone-50 focus:bg-white focus:ring-2 focus:ring-[#111113] focus:border-transparent outline-none transition-all text-sm text-stone-700"
+                [class.border-red-400]="briefingForm.get('budget')?.invalid && briefingForm.get('budget')?.touched"
+              >
+                <option value="" disabled>Selecione uma faixa estimada...</option>
+                <option value="Até R$ 25.000">Até R$ 25.000</option>
+                <option value="R$ 25.000 a R$ 50.000">R$ 25.000 a R$ 50.000</option>
                 <option value="R$ 50.000 a R$ 100.000">R$ 50.000 a R$ 100.000</option>
                 <option value="Acima de R$ 100.000">Acima de R$ 100.000</option>
               </select>
+              @if (briefingForm.get('budget')?.invalid && briefingForm.get('budget')?.touched) {
+                <span class="text-xs text-red-500 mt-1 block">Selecione uma faixa de orçamento.</span>
+              }
             </div>
           </div>
 
           <div>
-            <label class="block text-sm font-medium text-stone-700 mb-1">Descreva seu projeto</label>
-            <p class="text-xs text-stone-400 mb-2">Quais ambientes deseja projetar? Quais são as suas maiores dores hoje no espaço?</p>
-            <textarea formControlName="description" rows="4" class="w-full px-4 py-3 rounded-lg border border-stone-200 bg-stone-50 focus:bg-white focus:ring-2 focus:ring-[#111113] focus:border-transparent outline-none transition-all resize-none"></textarea>
+            <label for="description" class="block text-sm font-medium text-stone-700 mb-1">Descreva seu projeto e expectativas *</label>
+            <p class="text-xs text-stone-400 mb-2">Quais ambientes deseja transformar? Alguma preferência de estilo ou necessidade específica?</p>
+            <textarea
+              id="description"
+              formControlName="description"
+              rows="4"
+              placeholder="Ex: Reforma da cozinha integrada com a sala, troca de pisos e projeto luminotécnico completo..."
+              class="w-full px-4 py-3 rounded-lg border border-stone-200 bg-stone-50 focus:bg-white focus:ring-2 focus:ring-[#111113] focus:border-transparent outline-none transition-all text-sm resize-none"
+              [class.border-red-400]="briefingForm.get('description')?.invalid && briefingForm.get('description')?.touched"
+            ></textarea>
+            @if (briefingForm.get('description')?.invalid && briefingForm.get('description')?.touched) {
+              <span class="text-xs text-red-500 mt-1 block">Por favor, descreva brevemente seu projeto (mínimo 10 caracteres).</span>
+            }
+          </div>
+
+          <!-- Consentimento LGPD Obrigatório -->
+          <div class="pt-2">
+            <label class="flex items-start space-x-3 cursor-pointer">
+              <input
+                type="checkbox"
+                formControlName="lgpdConsent"
+                class="mt-1 h-4 w-4 text-[#111113] border-stone-300 rounded focus:ring-[#111113]"
+              >
+              <span class="text-xs text-stone-600 leading-relaxed">
+                Concordo com o tratamento dos meus dados para fins de elaboração e contato sobre a proposta de projeto, nos termos da Lei Geral de Proteção de Dados (LGPD). Seus dados não serão repassados a terceiros.
+              </span>
+            </label>
+            @if (briefingForm.get('lgpdConsent')?.invalid && briefingForm.get('lgpdConsent')?.touched) {
+              <span class="text-xs text-red-500 mt-1 block">O consentimento com a política de privacidade é obrigatório para envio.</span>
+            }
           </div>
 
           <div class="pt-4 text-center">
-            <button type="submit" [disabled]="briefingForm.invalid || isSubmitting()" class="w-full md:w-auto px-10 py-4 bg-[#111113] text-white rounded-full font-medium hover:bg-stone-800 focus:ring-4 focus:ring-stone-200 transition-all duration-300 flex items-center justify-center mx-auto disabled:opacity-70 disabled:cursor-not-allowed cursor-pointer">
+            <button
+              type="submit"
+              [disabled]="briefingForm.invalid || isSubmitting()"
+              class="w-full md:w-auto px-10 py-4 bg-[#111113] text-white rounded-full font-medium hover:bg-stone-800 focus:ring-4 focus:ring-stone-200 transition-all duration-300 flex items-center justify-center mx-auto disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer shadow-md"
+            >
               @if (isSubmitting()) {
                 <svg class="animate-spin h-5 w-5 text-white mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                   <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                   <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                 </svg>
-                <span>Enviando...</span>
+                <span>Enviando com Segurança...</span>
               } @else {
-                <span>Enviar para Análise</span>
+                <span>Enviar Solicitação de Orçamento</span>
                 <i class="ph ph-paper-plane-right ml-2 text-xl"></i>
               }
             </button>
-            <p class="text-xs text-stone-400 mt-4"><i class="ph ph-lock-key"></i> Suas informações estão seguras. Responderemos em até 48h úteis.</p>
+            <p class="text-xs text-stone-400 mt-4 flex items-center justify-center gap-1">
+              <i class="ph ph-shield-check text-stone-500"></i>
+              <span>Confirmação imediata por e-mail &middot; Resposta formal do designer em até 48h úteis.</span>
+            </p>
           </div>
         </form>
       </div>

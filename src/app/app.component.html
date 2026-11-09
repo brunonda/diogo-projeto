@@ -1,12 +1,9 @@
-<div class="app-container h-screen overflow-y-auto scroll-smooth bg-[#f7f7f8] text-[#111113] antialiased">
+<div class="app-container min-h-screen flex flex-col bg-[#f7f7f8] text-[#111113] antialiased">
   <app-navbar></app-navbar>
   
-  <main>
-    <app-hero></app-hero>
-    <app-services></app-services>
-    <app-portfolio></app-portfolio>
-    <app-briefing (showModalEvent)="handleModal($event)"></app-briefing>
-  </main>
+  <div class="flex-1">
+    <router-outlet></router-outlet>
+  </div>
   
   <app-footer></app-footer>
   

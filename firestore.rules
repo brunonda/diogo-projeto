@@ -1,0 +1,52 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // E-mail fixo do Designer (allowlist)
+    function isDesigner() {
+      return request.auth != null 
+        && request.auth.token.email == 'designer@estudio.com.br' 
+        && request.auth.token.email_verified == true;
+    }
+
+    // Regra padrão: negar tudo por padrão
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // ==========================================
+    // COLEÇÃO: projectRequests (Briefing Público do Visitante)
+    // ==========================================
+    match /projectRequests/{requestId} {
+      // Criação anônima permitida com validação dos campos obrigatórios
+      allow create: if request.resource.data.keys().hasAll(['clientName', 'clientEmail', 'projectType', 'budgetRange', 'description'])
+        && request.resource.data.clientName is string && request.resource.data.clientName.size() >= 3 && request.resource.data.clientName.size() <= 100
+        && request.resource.data.clientEmail is string && request.resource.data.clientEmail.size() <= 120
+        && request.resource.data.description is string && request.resource.data.description.size() >= 10 && request.resource.data.description.size() <= 4000;
+
+      // Somente o designer pode visualizar ou remover solicitações
+      allow read, delete: if isDesigner();
+      allow update: if false;
+    }
+
+    // ==========================================
+    // COLEÇÃO: projects (Portfólio & Fotos do Designer)
+    // ==========================================
+    match /projects/{projectId} {
+      // Leitura pública para que visitantes vejam o portfólio no site
+      allow read: if true;
+
+      // Criação, atualização e exclusão restritas unicamente ao Designer
+      allow create, update, delete: if isDesigner();
+    }
+
+    // ==========================================
+    // COLEÇÃO: auditLogs (Logs de Auditoria)
+    // ==========================================
+    match /auditLogs/{logId} {
+      allow read: if isDesigner();
+      allow create: if request.auth != null;
+      allow update, delete: if false; // Append-only
+    }
+  }
+}
